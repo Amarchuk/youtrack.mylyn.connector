@@ -257,6 +257,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
       TaskData taskData = parseIssue(repository, issue, monitor);
       return taskData;
     } catch (Exception e) {
+    	e.printStackTrace();
       throw new CoreException(new Status(IStatus.ERROR, YouTrackCorePlugin.ID_PLUGIN, NLS.bind(
           "Error parsing task {0}\n" + e.getMessage(), issue.getId()), e));
     }
