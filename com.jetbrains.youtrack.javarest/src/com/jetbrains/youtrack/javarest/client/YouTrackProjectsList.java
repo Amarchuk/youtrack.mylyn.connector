@@ -15,7 +15,7 @@ public class YouTrackProjectsList {
 	 
     private List<YouTrackProject> projects = new LinkedList<YouTrackProject>();
 	 
-    @XmlElement(name = "projectShorts", type = YouTrackProject.class)
+    @XmlElement(name = "project", type = YouTrackProject.class)
     public List<YouTrackProject> getProjects() {
         return projects;
     }

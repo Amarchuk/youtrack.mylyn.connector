@@ -164,7 +164,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
     attribute.getMetaData().setReadOnly(readOnly).setLabel(labelFromName(field.getName()))
         .setKind(CUSTOM_FIELD_KIND);
 
-    if (YouTrackCustomFieldType.getTypeByName(field.getType()).isSimple()) {
+    if (YouTrackCustomFieldType.getTypeByName(field.getType()) != null && YouTrackCustomFieldType.getTypeByName(field.getType()).isSimple()) {
       if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
           YouTrackCustomFieldType.DATE)) {
         attribute.getMetaData().setType(TaskAttribute.TYPE_DATE);
@@ -172,7 +172,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
         attribute.getMetaData().setType(TaskAttribute.TYPE_SHORT_TEXT);
       }
     } else {
-      if (YouTrackCustomFieldType.getTypeByName(field.getType()).singleField()) {
+      if (YouTrackCustomFieldType.getTypeByName(field.getType()) != null && YouTrackCustomFieldType.getTypeByName(field.getType()).singleField()) {
         if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
             YouTrackCustomFieldType.USER_SINGLE)) {
           attribute.getMetaData().setType(TaskAttribute.TYPE_SINGLE_SELECT);
@@ -400,8 +400,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
           && issue.getCustomFieldsValues().containsKey(field.getName())) {
 
         // check if issue complete
-        if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.STATE)) {
+        if (YouTrackCustomFieldType.STATE.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           LinkedList<StateValue> states =
               ((StateBundleValues) field.getBundle().getBundleValues()).getStateValues();
           for (StateValue state : states) {
@@ -424,17 +423,14 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
         } else if (customFieldAttribute.getMetaData().getType().equals(TaskAttribute.TYPE_DATE)) {
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.PERIOD)) {
+        } else if (YouTrackCustomFieldType.PERIOD.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.getMetaData().setType(TYPE_PERIOD);
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.USER_SINGLE)) {
+        } else if (YouTrackCustomFieldType.USER_SINGLE.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
           customFieldAttribute.putOption(issue.getCustomFieldValue(field.getName()).getFirst(),
               issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.USER_MULTI)) {
+        } else if (YouTrackCustomFieldType.USER_MULTI.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.setValues(issue.getCustomFieldValue(field.getName()));
           for (String value : issue.getCustomFieldValue(field.getName())) {
             customFieldAttribute.putOption(value, value);

@@ -92,7 +92,7 @@ public class YouTrackProject {
           YouTrackCustomField fullField =
               client.getProjectCustomField(projectShortName, field.getName());
 
-          if (!YouTrackCustomFieldType.getTypeByName(fullField.getType()).isSimple()) {
+          if (YouTrackCustomFieldType.getTypeByName(fullField.getType()) != null && !YouTrackCustomFieldType.getTypeByName(fullField.getType()).isSimple()) {
             fullField.findBundle();
             fullField.getBundle().setBundleValues(
                 fullField.getBundle().getBundleValuesFromClient(client));
