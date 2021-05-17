@@ -3,52 +3,10 @@
    <description name="YouTrack Mylyn Connector" url="http://jetbrains.github.io/youtrack.mylyn.connector/updatesite/update/">
       Eclipse plugin connector for YouTrack bugtracker using Mylyn.
    </description>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201401221636.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201401221636">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201401221810.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201401221810">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201401232038.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201401232038">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201401242030.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201401242030">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402032128.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402032128">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402042127.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402042127">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402052022.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402052022">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402061254.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402061254">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402071328.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402071328">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402101209.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402101209">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402101723.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402101723">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402101855.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402101855">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402111340.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402111340">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402111707.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402111707">
-      <category name="versions"/>
-   </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402112032.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402112032">
-      <category name="versions"/>
-   </feature>
    <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402211229.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402211229">
+      <category name="versions"/>
+   </feature>
+   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.202105171209.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.202105171209">
       <category name="versions"/>
    </feature>
    <category-def name="versions" label="Versions"/>

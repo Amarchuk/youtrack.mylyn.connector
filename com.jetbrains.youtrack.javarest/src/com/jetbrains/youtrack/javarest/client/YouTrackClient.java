@@ -30,6 +30,7 @@ import com.jetbrains.youtrack.javarest.utils.YouTrackTimeSettings;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.representation.Form;
 
 /**
@@ -143,6 +144,9 @@ public class YouTrackClient {
 
   public void setPassword(String password) {
     this.password = password;
+    if (username != null) {
+      this.service.addFilter(new HTTPBasicAuthFilter(username, password));
+    }
   }
 
   public String getUsername() {
@@ -155,6 +159,9 @@ public class YouTrackClient {
 
   public void setUsername(String username) {
     this.username = username;
+    if (password != null) {
+      this.service.addFilter(new HTTPBasicAuthFilter(username, password));
+    }
   }
 
   public List<YouTrackProject> getProjects() {
