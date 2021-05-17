@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description name="YouTrack Mylyn Connector" url="http://jetbrains.github.io/youtrack.mylyn.connector/updatesite/update/">
+   <description name="YouTrack Mylyn Connector" url="http://bvfalcon.github.io/youtrack.mylyn.connector/updatesite/update/">
       Eclipse plugin connector for YouTrack bugtracker using Mylyn.
    </description>
    <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402211229.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402211229">
