@@ -263,7 +263,9 @@ public class YouTrackRepositoryConnector extends AbstractRepositoryConnector {
 
   public int queryIssuesAmount(String projectname, String filter, TaskRepository repository)
       throws CoreException {
-    return getClient(repository).getNumberOfIssues(getFilter(projectname, filter, repository));
+	  String str = getFilter(projectname, filter, repository);
+	  System.out.println("called queryIssuesAmount(" + str + ")");
+    return getClient(repository).getNumberOfIssues(str);
   }
 
   @Override

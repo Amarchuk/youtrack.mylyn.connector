@@ -213,6 +213,7 @@ public class IntellisenseFocusAdapter implements FocusListener {
               @Override
               protected IStatus run(IProgressMonitor monitor) {
                 if (isCountIssuses) {
+                	System.out.println("called count.issues.job(" + filterText + ")");
                   queryIssuesAmount = getClient().getNumberOfIssues(filterText);
                 }
 

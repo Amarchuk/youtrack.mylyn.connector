@@ -282,6 +282,7 @@ public class YouTrackRepositoryQueryPage extends AbstractRepositoryQueryPage {
       Job countJob = new Job("count.issues.job") {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
+        	System.out.println("called count.issues.job(" + queryFilter + ")");
           queryIssuesAmount = getClient().getNumberOfIssues(queryFilter);
           return Status.OK_STATUS;
         }
