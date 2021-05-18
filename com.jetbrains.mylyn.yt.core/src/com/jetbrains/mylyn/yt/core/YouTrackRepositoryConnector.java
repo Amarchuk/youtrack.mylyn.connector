@@ -48,6 +48,9 @@ public class YouTrackRepositoryConnector extends AbstractRepositoryConnector {
 
   private static Map<TaskRepository, HashSet<YouTrackProject>> projectsByRepository =
       new HashMap<TaskRepository, HashSet<YouTrackProject>>();
+  
+  private static Map<String, String> mylyn2youtrackIssueId =
+      new HashMap<String, String>();
 
   private final YouTrackTaskDataHandler taskDataHandler;
 
@@ -174,7 +177,7 @@ public class YouTrackRepositoryConnector extends AbstractRepositoryConnector {
       throws CoreException {
 
     YouTrackIssue issue =
-        getClient(taskRepository).getIssue(getRealIssueId(taskId, taskRepository));
+        getClient(taskRepository).getIssue(getYoutrackIssueId(taskId));
     // stall a while to allow the UI to update
     monitor.worked(10);
     return taskDataHandler.readTaskData(taskRepository, issue, monitor);
@@ -283,11 +286,21 @@ public class YouTrackRepositoryConnector extends AbstractRepositoryConnector {
     return taskDataHandler;
   }
 
-  public static String getRealIssueId(String pseudoIssueId, TaskRepository taskRepository) {
-    if (pseudoIssueId.contains("-")) {
-      return pseudoIssueId;
+  public static String getYoutrackIssueId(String mylynIssueId) {
+    if (mylyn2youtrackIssueId.get(mylynIssueId) != null) {
+      return mylyn2youtrackIssueId.get(mylynIssueId);
     } else {
-      return pseudoIssueId.replace("_", "-");
+      return mylynIssueId;
+    }
+  }
+  
+  public static String getMylynIssueId(String youtrackIssueId) {
+    if (youtrackIssueId.contains("-")) {
+      String mylynIssueId = youtrackIssueId.replace("-", "_");
+      mylyn2youtrackIssueId.put(mylynIssueId, youtrackIssueId);
+      return mylynIssueId;
+    } else {
+      return youtrackIssueId;
     }
   }
 

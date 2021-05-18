@@ -57,8 +57,7 @@ public class YouTrackCommandWindowWizard extends Wizard {
 
       Label commandBoxLabel = new Label(composite, SWT.FILL);
       String issueId =
-          YouTrackRepositoryConnector
-              .getRealIssueId(getTaskData().getTaskId(), getTaskRepository());
+          YouTrackRepositoryConnector.getYoutrackIssueId(getTaskData().getTaskId());
       commandBoxLabel.setText("Command for " + issueId + ": "
           + getTaskData().getRoot().getMappedAttribute(TaskAttribute.SUMMARY).getValue());
 
@@ -115,7 +114,7 @@ public class YouTrackCommandWindowWizard extends Wizard {
     } else {
       try {
         getClient().applyCommand(
-            YouTrackRepositoryConnector.getRealIssueId(getTaskData().getTaskId(), taskRepository),
+            YouTrackRepositoryConnector.getYoutrackIssueId(getTaskData().getTaskId()),
             getCommandDialogPage().getCommandBoxText().getText());
         return true;
       } catch (RuntimeException e) {

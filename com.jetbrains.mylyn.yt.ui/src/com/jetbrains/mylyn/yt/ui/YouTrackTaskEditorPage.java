@@ -66,10 +66,10 @@ public class YouTrackTaskEditorPage extends AbstractTaskEditorPage {
         // press CTRL+ALT+J
 
         String issueId =
-            YouTrackRepositoryConnector.getRealIssueId(
+            YouTrackRepositoryConnector.getYoutrackIssueId(
                 ((AbstractTaskEditorPage) ((TaskEditor) PlatformUI.getWorkbench()
                     .getActiveWorkbenchWindow().getActivePage().getActiveEditor())
-                    .getActivePageInstance()).getTask().getTaskId(), getTaskRepository());
+                    .getActivePageInstance()).getTask().getTaskId());
 
         if (issueId != null && issueId.contains("-")) {
           YouTrackSummaryPart.openCommandWizard(getEditorComposite().getShell(), null, true,

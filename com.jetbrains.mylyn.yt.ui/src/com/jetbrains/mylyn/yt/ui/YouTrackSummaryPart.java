@@ -233,7 +233,7 @@ public class YouTrackSummaryPart extends TaskEditorSummaryPart {
         } else {
           TaskRepository repository = getTaskEditorPage().getModel().getTaskRepository();
           YouTrackRepositoryConnector.getClient(repository).addNewTag(
-              YouTrackRepositoryConnector.getRealIssueId(getTaskData().getTaskId(), repository),
+              YouTrackRepositoryConnector.getYoutrackIssueId(getTaskData().getTaskId()),
               selectedText);
 
           TaskAttribute attribute =
