@@ -25,7 +25,7 @@ public class YouTrackAttributesPart extends AbstractTaskEditorPart {
   }
 
   private void addAttribute(Composite composite, FormToolkit toolkit, TaskAttribute attribute) {
-    if (attribute != null || "".equals(attribute)) {
+    if (attribute != null) {
       AbstractAttributeEditor editor = createAttributeEditor(attribute);
       if (editor != null) {
         editor.createLabelControl(composite, toolkit);

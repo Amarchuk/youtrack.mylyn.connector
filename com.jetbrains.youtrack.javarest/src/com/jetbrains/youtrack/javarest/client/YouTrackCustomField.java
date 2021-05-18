@@ -43,8 +43,10 @@ public class YouTrackCustomField {
     VERSION_SINGLE("version[1]", false, true, String.class),
     VERSION_MULTI("version[*]", false, false, String.class),
     DATE("date", true, true, Date.class),
+    DATE_AND_TIME("date and time", true, true, Date.class),
     INTEGER("integer", true, true, Integer.class),
     STRING("string", true, true, String.class),
+    TEXT("text", true, true, String.class),
     FLOAT("float", true, true, Float.class),
     PERIOD("period", true, true, String.class);
 

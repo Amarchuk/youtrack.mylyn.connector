@@ -62,7 +62,7 @@ public class DeleteTaskAction extends DeleteAction {
               + task.getSummary());
       if (confirm) {
         YouTrackRepositoryConnector.getClient(repository).deleteIssue(
-            YouTrackRepositoryConnector.getRealIssueId(task.getTaskId(), repository));
+            YouTrackRepositoryConnector.getYoutrackIssueId(task.getTaskId()));
         super.performDeletion(Arrays.asList(task));
         page.close();
       }

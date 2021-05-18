@@ -164,25 +164,24 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
     attribute.getMetaData().setReadOnly(readOnly).setLabel(labelFromName(field.getName()))
         .setKind(CUSTOM_FIELD_KIND);
 
-    if (YouTrackCustomFieldType.getTypeByName(field.getType()).isSimple()) {
-      if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-          YouTrackCustomFieldType.DATE)) {
-        attribute.getMetaData().setType(TaskAttribute.TYPE_DATE);
+    YouTrackCustomFieldType customType = YouTrackCustomFieldType.getTypeByName(field.getType());
+    String taskAttribute = null;
+    if (customType.isSimple()) {
+      if (YouTrackCustomFieldType.DATE.equals(customType)) {
+        taskAttribute = TaskAttribute.TYPE_DATE;
+      } else if (YouTrackCustomFieldType.DATE_AND_TIME.equals(customType)) {
+        taskAttribute = TaskAttribute.TYPE_DATETIME;
       } else {
-        attribute.getMetaData().setType(TaskAttribute.TYPE_SHORT_TEXT);
+        taskAttribute = TaskAttribute.TYPE_SHORT_TEXT;
       }
     } else {
-      if (YouTrackCustomFieldType.getTypeByName(field.getType()).singleField()) {
-        if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.USER_SINGLE)) {
-          attribute.getMetaData().setType(TaskAttribute.TYPE_SINGLE_SELECT);
-        } else {
-          attribute.getMetaData().setType(TaskAttribute.TYPE_SINGLE_SELECT);
-        }
+      if (customType.singleField()) {
+        taskAttribute = TaskAttribute.TYPE_SINGLE_SELECT;
       } else {
-        attribute.getMetaData().setType(TaskAttribute.TYPE_MULTI_SELECT);
+        taskAttribute = TaskAttribute.TYPE_MULTI_SELECT;
       }
     }
+    attribute.getMetaData().setType(taskAttribute);
 
     if (field.getDefaultValues() != null) {
       attribute.setValues(field.getDefaultValues());
@@ -257,6 +256,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
       TaskData taskData = parseIssue(repository, issue, monitor);
       return taskData;
     } catch (Exception e) {
+    	e.printStackTrace();
       throw new CoreException(new Status(IStatus.ERROR, YouTrackCorePlugin.ID_PLUGIN, NLS.bind(
           "Error parsing task {0}\n" + e.getMessage(), issue.getId()), e));
     }
@@ -274,7 +274,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
     String issueId = issue.getId();
     TaskData taskData =
         new TaskData(getAttributeMapper(repository), repository.getConnectorKind(),
-            repository.getRepositoryUrl(), issueId.replace("-", "_"));
+            repository.getRepositoryUrl(), YouTrackRepositoryConnector.getMylynIssueId(issueId));
     initializeTaskData(repository, taskData, null, monitor);
 
     TaskAttribute attribute = taskData.getRoot().getAttribute(TaskAttribute.SUMMARY);
@@ -378,7 +378,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
         mapper.setAuthor(repository.createPerson(comment.getAuthorName()));
         mapper.setCreationDate(comment.getCreationDate());
         mapper.setText(comment.getText());
-        mapper.setNumber(count);
+        mapper.setNumber(count+1);
 
         TaskAttribute commentAttribute =
             taskData.getRoot().createAttribute(TaskAttribute.PREFIX_COMMENT + count);
@@ -399,8 +399,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
           && issue.getCustomFieldsValues().containsKey(field.getName())) {
 
         // check if issue complete
-        if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.STATE)) {
+        if (YouTrackCustomFieldType.STATE.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           LinkedList<StateValue> states =
               ((StateBundleValues) field.getBundle().getBundleValues()).getStateValues();
           for (StateValue state : states) {
@@ -422,18 +421,19 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
           }
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
         } else if (customFieldAttribute.getMetaData().getType().equals(TaskAttribute.TYPE_DATE)) {
-          customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.PERIOD)) {
+          String value = issue.getCustomFieldValue(field.getName()).getFirst();
+          taskData.getAttributeMapper().setDateValue(customFieldAttribute, new Date(Long.valueOf(value).longValue()));
+        } else if (customFieldAttribute.getMetaData().getType().equals(TaskAttribute.TYPE_DATETIME)) {
+          String value = issue.getCustomFieldValue(field.getName()).getFirst();
+          taskData.getAttributeMapper().setDateValue(customFieldAttribute, new Date(Long.valueOf(value).longValue()));
+        } else if (YouTrackCustomFieldType.PERIOD.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.getMetaData().setType(TYPE_PERIOD);
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.USER_SINGLE)) {
+        } else if (YouTrackCustomFieldType.USER_SINGLE.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.setValue(issue.getCustomFieldValue(field.getName()).getFirst());
           customFieldAttribute.putOption(issue.getCustomFieldValue(field.getName()).getFirst(),
               issue.getCustomFieldValue(field.getName()).getFirst());
-        } else if (YouTrackCustomFieldType.getTypeByName(field.getType()).equals(
-            YouTrackCustomFieldType.USER_MULTI)) {
+        } else if (YouTrackCustomFieldType.USER_MULTI.equals(YouTrackCustomFieldType.getTypeByName(field.getType()))) {
           customFieldAttribute.setValues(issue.getCustomFieldValue(field.getName()));
           for (String value : issue.getCustomFieldValue(field.getName())) {
             customFieldAttribute.putOption(value, value);
@@ -723,7 +723,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
   public static URL getIssueURL(TaskData data, TaskRepository repository) {
     try {
       return new URL(data.getRepositoryUrl() + YouTrackRepositoryConnector.ISSUE_URL_PREFIX
-          + YouTrackRepositoryConnector.getRealIssueId(data.getTaskId(), repository));
+          + YouTrackRepositoryConnector.getYoutrackIssueId(data.getTaskId()));
     } catch (MalformedURLException e) {
       return null;
     }
@@ -738,7 +738,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
 
       for (String id : taskIds) {
         collector.accept(parseIssue(repository,
-            client.getIssue(YouTrackRepositoryConnector.getRealIssueId(id, repository)), monitor));
+            client.getIssue(YouTrackRepositoryConnector.getYoutrackIssueId(id)), monitor));
       }
     } finally {
       monitor.done();

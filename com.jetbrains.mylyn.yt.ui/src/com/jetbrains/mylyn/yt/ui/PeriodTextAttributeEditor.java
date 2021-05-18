@@ -24,6 +24,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import com.jetbrains.mylyn.yt.core.YouTrackRepositoryConnector;
 import com.jetbrains.youtrack.javarest.utils.YouTrackTimeSettings;
+import com.sun.jersey.api.client.UniformInterfaceException;
 
 /**
  * @author Steffen Pingel
@@ -138,6 +139,9 @@ public class PeriodTextAttributeEditor extends TextAttributeEditor {
       return result;
     } catch (NumberFormatException e) {
       return period;
+    } catch (UniformInterfaceException e) {
+      e.printStackTrace();
+      return period + "m";
     }
   }
 
