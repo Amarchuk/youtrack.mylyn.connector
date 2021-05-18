@@ -379,7 +379,7 @@ public class YouTrackTaskDataHandler extends AbstractTaskDataHandler {
         mapper.setAuthor(repository.createPerson(comment.getAuthorName()));
         mapper.setCreationDate(comment.getCreationDate());
         mapper.setText(comment.getText());
-        mapper.setNumber(count);
+        mapper.setNumber(count+1);
 
         TaskAttribute commentAttribute =
             taskData.getRoot().createAttribute(TaskAttribute.PREFIX_COMMENT + count);
