@@ -6,7 +6,7 @@
    <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.201402211229.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.201402211229">
       <category name="versions"/>
    </feature>
-   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.202105171936.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.202105171936">
+   <feature url="features/com.jetbrains.mylyn.yt.connector.feature_1.0.0.202105181632.jar" id="com.jetbrains.mylyn.yt.connector.feature" version="1.0.0.202105181632">
       <category name="versions"/>
    </feature>
    <category-def name="versions" label="Versions"/>
